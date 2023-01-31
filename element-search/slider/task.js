@@ -3,24 +3,50 @@ const prevBtn = document.getElementsByClassName('slider__arrow_prev');
 const nextBtn = document.getElementsByClassName('slider__arrow_next');
 const sliderDots = Array.from(document.querySelectorAll('.slider__dot'));
 
-let activeSlide = 0;
+function showSlide(number) {
+    sliderItems[activeSlide].classList.remove('slider__item_active');
+    sliderDots[activeSlide].classList.remove('slider__dot_active');
+    let targetSlide;
+    if (number < 0) {
+        targetSlide = (sliderItems.length - 1);
+    } else if (number > (sliderItems.length - 1)) {
+        targetSlide = 0;
+    } else {
+        targetSlide = number;
+    }
+
+    sliderItems[targetSlide].classList.add('slider__item_active');
+    sliderDots[targetSlide].classList.add('slider__dot_active');
+    activeSlide = targetSlide;
+}
+
+let activeSlide = findActiveSlide();
 sliderDots[activeSlide].classList.add('slider__dot_active');
 
+sliderDots.forEach(e => 
+    e.onclick = function() {
+        showSlide(sliderDots.indexOf(e))
+    })
+
 nextBtn[0].onclick = function() {
-    nextSlide(sliderItems);
+    showSlide(findActiveSlide() + 1);
 };
 
 prevBtn[0].onclick = function() {
-    prevSlide(sliderItems);
+    showSlide(findActiveSlide() - 1);
 }
 
-function prevSlide(arr) {
+function findActiveSlide() {
+    return sliderItems.findIndex(e => e.classList.contains('slider__item_active'))
+}
+
+/*function prevSlide(arr) {
     for (let i = 0; i < arr.length; i++) {
         const element = arr[i];
         if (element.classList.contains('slider__item_active')) {
-            element.classList.remove('slider__item_active');
-            sliderDots[activeSlide].classList.remove('slider__dot_active');
-            activeSlide = arr.indexOf(element);
+                element.classList.remove('slider__item_active');
+                sliderDots[activeSlide].classList.remove('slider__dot_active');
+                activeSlide = arr.indexOf(element);
             if (activeSlide === 0) {
                 activeSlide = (arr.length - 1);
             } else {
@@ -38,9 +64,9 @@ function nextSlide(arr) {
     for (let i = 0; i < arr.length; i++) {
         const element = arr[i];
         if (element.classList.contains('slider__item_active')) {
-            element.classList.remove('slider__item_active');
-            sliderDots[activeSlide].classList.remove('slider__dot_active');
-            activeSlide = arr.indexOf(element);
+                element.classList.remove('slider__item_active');
+                sliderDots[activeSlide].classList.remove('slider__dot_active');
+                activeSlide = arr.indexOf(element);
             if (activeSlide === (arr.length - 1)){
                 activeSlide = 0;
             } else {
@@ -63,18 +89,4 @@ sliderDots.forEach(e => {
         sliderDots[activeSlide].classList.add('slider__dot_active');
     }
 });
-
-
-/*
-function findActiveSlide() {
-    for (let i = 0; i < sliderItems.length; i++) {
-        if (sliderItems[i].classList.contains('slider__item_active')) {
-            activeSlide = i;
-        }        
-    }
-}
 */
-
-
-
-
