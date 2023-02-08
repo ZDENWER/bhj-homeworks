@@ -17,6 +17,11 @@ class Game {
   }
 
   registerEvents() {
+    function onKey(k) {
+      console.log(k.key)
+    }
+
+    window.addEventListener ('keyup', onKey);
     /*
       TODO:
       Написать обработчик события, который откликается
