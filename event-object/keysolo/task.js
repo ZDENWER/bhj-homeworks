@@ -16,10 +16,27 @@ class Game {
     this.lossElement.textContent = 0;
   }
 
+  
+
   registerEvents() {
-    function onKey(k) {
-      console.log(k.key)
+    window.addEventListener('keydown', (k) => {
+      let current = this.currentSymbol.textContent.toLowerCase();
+      if (k.key.toLowerCase() === current) {
+        this.success();
+      } else {
+        this.fail();
+      }
+    })
+
+
+    /*function onKey(k) {
+      if (k.key.toLowerCase() === current) { 
+        this.success();
+        console.log('Совпадает')
+      }
     }
+
+    
 
     window.addEventListener ('keyup', onKey);
     /*
